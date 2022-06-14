@@ -1,0 +1,29 @@
+@charset "UTF-8";
+h5.topTitle{
+	padding-left: 1rem; 
+}
+
+div.origin-contiainer{
+	padding-right: 1rem !important;
+	padding-left: 1rem !important;
+}
+
+form.origin-form-contiainer{
+	border: solid #dee2e6 !important;
+	border-wigth: 1px !important;
+	border-radius: 0.5rem !important;
+	padding-right: 1rem !important;
+	padding-left: 1rem !important;
+}
+
+label.origin-label-font1{
+	font-size: 1.3rem;
+}
+
+div.origin-table-contiainer{
+	border: solid #dc143c !important;
+	border-wigth: 1px !important;
+	border-radius: 0.5rem !important;
+	padding-right: 1rem !important;
+	padding-left: 1rem !important;
+}

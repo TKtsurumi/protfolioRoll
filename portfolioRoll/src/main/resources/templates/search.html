@@ -1,0 +1,115 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>社員検索画面</title>
+        <!-- javascrip -->
+        <script type="text/javascript">
+        //全件検索用ファンクション
+        function allSubmit(){
+        	//form要素の取得
+        	var allSForm = document.getElementById('allSF');
+        	allSForm.submit();
+        };
+        
+        //削除用ファンクション
+        function delSubmit(){
+    		if(confirm("名簿を削除しますか？")){
+    			return true;
+    		}else{
+    			return false;
+    		};
+        };
+        
+        //編集遷移用ファンクション
+        function editSubmit(){
+    		if(confirm("名簿を編集しますか？")){
+    			return true;
+    		}else{
+    			return false;
+    		};
+        };
+        </script>
+    </head>
+    <body>
+ 	<!-- javascropt読み込みエリア -->
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <!-- ナビゲーションエリアの読み込み -->
+	<script src="js/include.js"></script>
+  <!-- メインコンテンツ -->
+  <h5 class="topTitle">社員検索</h5>
+	<div class="origin-contiainer col-sm-10 mb-3" th:if="${errorList}">
+		<div class="origin-table-contiainer">
+			<table>
+				<tr th:each="errors:${errorList}" th:object="${errors}">
+					<td th:text="${errors}"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<!-- 検索条件エリア -->
+	<div class="origin-contiainer">
+		<form class="origin-form-contiainer" action="#" th:action="@{/rollSearch}" th:method="post" th:object="${user}">
+			<div class="form-group row  mb-1">
+				<div class="col-md-10">
+					<label class="control-label col-sm-3 origin-label-font1">社員ID(完全一致)</label>
+					<input class="form-control" type="text" name="id"/>
+				</div>
+			</div>
+			<div class="form-group row  mb-1">
+				<div class="col-md-10">
+					<label class="control-label col-sm-3 origin-label-font1">氏名(部分一致)</label>
+					<input class="form-control" type="text" name="name"/>
+				</div>
+			</div>
+			<div class="form-group row  mb-1">
+				<div class="col-md-3">
+					<button class="btn btn-primary">検索</button>
+					<button class="btn btn-primary" type="button" th:onclick="return allSubmit()">全件表示</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- 検索結果表示エリア -->
+	<div class="origin-contiainer">
+		<div class="card card-primary mb-3">
+			<table class="table">
+				<thead>
+					<tr>
+						<th style="width: 10%">顔写真</th>
+						<th style="width: 10%">社員ID</th>
+						<th style="width: 30%">氏名</th>
+						<th style="width: 10%">役職</th>
+						<th style="width: 5%"></th>
+						<th style="width: 5%"></th>
+						<th style="width: 5%"></th>
+					</tr>
+				</thead>
+				<tbody th:if="${rollList}">
+					<tr th:each="roll:${rollList}" th:object="${roll}">
+						<td><img th:src="*{imgPath}" alt="" width="96" height="96"/></td>
+						<td th:text="*{id}"></td>
+						<td th:text="*{name}"></td>
+						<td th:text="*{post}"></td>
+						<td>
+							<form action="#" th:action="@{/rollEdit}" th:method="post">
+								<input type="hidden" name="editId" th:value="*{id}"/>
+								<button class="btn btn-primary" onclick="return editSubmit()">編集</button>
+							</form>
+						</td>
+						<td>
+							<form action="#" th:action="@{/rollDel}" th:method="post">
+								<input type="hidden" name="delId" th:value="*{id}" />
+								<button class="btn btn-primary" onclick="return delSubmit()">削除</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<form id="allSF" action="#" th:action="@{/allSearch}" th:method="post">
+		<input type="hidden" />
+	</form>
+</body>
+</html>
